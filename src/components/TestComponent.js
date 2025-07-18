@@ -164,7 +164,7 @@ const TestComponent = ({
 
     const fetchStats = async () => {
         try {
-            const res = await fetch('https://demo-production-b992.up.railway.app/api/submit-choice');
+            const res = await fetch('/api/submit-choice');
             if (!res.ok) throw new Error(`Status ${res.status}`);
             const { total, correct } = await res.json();
             setStats({ total, correct });
@@ -198,7 +198,7 @@ const TestComponent = ({
         };
 
         try {
-            const res = await fetch('https://demo-production-b992.up.railway.app/api/submit-choice', {
+            const res = await fetch('/api/submit-choice', {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body:    JSON.stringify(choiceData),
