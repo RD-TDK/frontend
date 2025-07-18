@@ -16,7 +16,8 @@ const UserContextProvider = ({ children }) => {
             const storedGender = localStorage.getItem('gender');
             if (storedId && storedGender) {
                 try {
-                    const response = await fetch('/api/user/login', {
+                    //https://demo-production-b992.up.railway.app
+                    const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: storedId, gender: storedGender }),
@@ -39,7 +40,7 @@ const UserContextProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const response = await fetch('/api/user/login', {
+            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -65,7 +66,7 @@ const UserContextProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const response = await fetch('/api/user/register', {
+            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
