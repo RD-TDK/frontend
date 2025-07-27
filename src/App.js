@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Welcome from './components/Welcome';
 import PreTest from './pages/PreTest';
+import TrainingIntroPage from './pages/TrainingIntroPage';
 import TrainingTest from './pages/TrainingTest';
 import PostTest from './pages/PostTest';
 import FeatureSelectPage from './pages/FeatureSelectPage';
@@ -28,6 +29,7 @@ const App = () => {
                     <Route path="/" element={<Navigate to="/welcome" replace />} />
                     <Route path="/welcome" element={<Welcome />} />
                     <Route path="/pre-test" element={<PreTest />} />
+                    <Route path="/training-intro" element={<TrainingIntroPage />} />
                     <Route path="/training-test" element={<TrainingTest />} />
                     <Route path="/post-test" element={<PostTest />} />
                     <Route path="/feature-select" element={<FeatureSelectPage />} />

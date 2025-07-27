@@ -72,27 +72,70 @@ const IMAGES = [
     { src: '/images/real/00058.png', isReal: true, feedback: 'Correct!', explanationImage: null },
     { src: '/images/real/00059.png', isReal: true, feedback: 'Correct!', explanationImage: null },
     // AI 图，带 feature
-    { src: '/images/features/asymmetries/asy_01.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_ex_01.png' },
-    { src: '/images/features/asymmetries/asy_02.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_03.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_04.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_05.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_06.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_07.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_08.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_09.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_10.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_11.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_12.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_13.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_14.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_15.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_16.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_17.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_18.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_19.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' },
-    { src: '/images/features/asymmetries/asy_20.png', feature: 'asymmetries', isReal: false, feedback: 'Oops, that was AI.', explanationImage: '/images/features/asymmetries/asy_multipepple_explain.png' }
-    // …按需补全更多
+    { src: '/images/features/asymmetries/asy_01.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the facial asymmetry and unrealistic proportions.', explanationImage: '/images/features/ex_asy/asy_ex_01.png' },
+    { src: '/images/features/asymmetries/asy_02.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unnatural facial symmetry and artificial proportions.', explanationImage: '/images/features/ex_asy/asy_ex_02.png' },
+    { src: '/images/features/asymmetries/asy_03.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unrealistic facial features and artificial symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_03.png' },
+    { src: '/images/features/asymmetries/asy_04.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial proportions and unrealistic symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_04.png' },
+    { src: '/images/features/asymmetries/asy_05.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unnatural facial asymmetry and artificial features.', explanationImage: '/images/features/ex_asy/asy_ex_05.png' },
+    { src: '/images/features/asymmetries/asy_06.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unrealistic facial proportions and artificial symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_06.png' },
+    { src: '/images/features/asymmetries/asy_07.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial features and unnatural proportions.', explanationImage: '/images/features/ex_asy/asy_ex_07.png' },
+    { src: '/images/features/asymmetries/asy_08.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unrealistic facial symmetry and artificial proportions.', explanationImage: '/images/features/ex_asy/asy_ex_08.png' },
+    { src: '/images/features/asymmetries/asy_09.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unnatural facial asymmetry and artificial features.', explanationImage: '/images/features/ex_asy/asy_ex_09.png' },
+    { src: '/images/features/asymmetries/asy_10.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial proportions and unrealistic symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_10.png' },
+    { src: '/images/features/asymmetries/asy_11.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unnatural facial features and artificial proportions.', explanationImage: '/images/features/ex_asy/asy_ex_11.png' },
+    { src: '/images/features/asymmetries/asy_12.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unrealistic facial symmetry and artificial asymmetry.', explanationImage: '/images/features/ex_asy/asy_ex_12.png' },
+    { src: '/images/features/asymmetries/asy_13.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial proportions and unnatural features.', explanationImage: '/images/features/ex_asy/asy_ex_13.png' },
+    { src: '/images/features/asymmetries/asy_14.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unrealistic facial asymmetry and artificial symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_14.png' },
+    { src: '/images/features/asymmetries/asy_15.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unnatural facial proportions and artificial features.', explanationImage: '/images/features/ex_asy/asy_ex_15.png' },
+    { src: '/images/features/asymmetries/asy_16.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial symmetry and unrealistic proportions.', explanationImage: '/images/features/ex_asy/asy_ex_16.png' },
+    { src: '/images/features/asymmetries/asy_17.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unnatural facial asymmetry and artificial proportions.', explanationImage: '/images/features/ex_asy/asy_ex_17.png' },
+    { src: '/images/features/asymmetries/asy_18.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Check the unrealistic facial features and artificial symmetry.', explanationImage: '/images/features/ex_asy/asy_ex_18.png' },
+    { src: '/images/features/asymmetries/asy_19.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Notice the artificial facial proportions and unnatural asymmetry.', explanationImage: '/images/features/ex_asy/asy_ex_19.png' },
+    { src: '/images/features/asymmetries/asy_20.png', feature: 'asymmetries', isReal: false, feedback: 'AI generated - Look for the unrealistic facial symmetry and artificial features.', explanationImage: '/images/features/ex_asy/asy_ex_20.png' },
+    
+    // Background AI images
+    { src: '/images/features/background/ai_bac_01.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background patterns and unrealistic textures.', explanationImage: '/images/features/ex_bac/ai_bac_ex_01.png' },
+    { src: '/images/features/background/ai_bac_02.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background elements and artificial blending.', explanationImage: '/images/features/ex_bac/ai_bac_ex_02.png' },
+    { src: '/images/features/background/ai_bac_03.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background textures and artificial patterns.', explanationImage: '/images/features/ex_bac/ai_bac_ex_03.png' },
+    { src: '/images/features/background/ai_bac_04.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background elements and texture inconsistencies.', explanationImage: '/images/features/ex_bac/ai_bac_ex_04.png' },
+    { src: '/images/features/background/ai_bac_05.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background and artificial details.', explanationImage: '/images/features/ex_bac/ai_bac_ex_05.png' },
+    { src: '/images/features/background/ai_bac_06.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background patterns and texture uniformity.', explanationImage: '/images/features/ex_bac/ai_bac_ex_06.png' },
+    { src: '/images/features/background/ai_bac_07.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background elements and color blending issues.', explanationImage: '/images/features/ex_bac/ai_bac_ex_07.png' },
+    { src: '/images/features/background/ai_bac_08.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background textures and artificial patterns.', explanationImage: '/images/features/ex_bac/ai_bac_ex_08.png' },
+    { src: '/images/features/background/ai_bac_09.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background details and texture inconsistencies.', explanationImage: '/images/features/ex_bac/ai_bac_ex_09.png' },
+    { src: '/images/features/background/ai_bac_10.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background elements and color bleeding effects.', explanationImage: '/images/features/ex_bac/ai_bac_ex_10.png' },
+    { src: '/images/features/background/ai_bac_11.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background and artificial texture patterns.', explanationImage: '/images/features/ex_bac/ai_bac_ex_11.png' },
+    { src: '/images/features/background/ai_bac_12.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background patterns and artificial blending.', explanationImage: '/images/features/ex_bac/ai_bac_ex_12.png' },
+    { src: '/images/features/background/ai_bac_13.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background elements and texture uniformity issues.', explanationImage: '/images/features/ex_bac/ai_bac_ex_13.png' },
+    { src: '/images/features/background/ai_bac_14.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background and artificial details.', explanationImage: '/images/features/ex_bac/ai_bac_ex_14.png' },
+    { src: '/images/features/background/ai_bac_15.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background textures and color blending problems.', explanationImage: '/images/features/ex_bac/ai_bac_ex_15.png' },
+    { src: '/images/features/background/ai_bac_16.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background patterns and texture inconsistencies.', explanationImage: '/images/features/ex_bac/ai_bac_ex_16.png' },
+    { src: '/images/features/background/ai_bac_17.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background elements and artificial patterns.', explanationImage: '/images/features/ex_bac/ai_bac_ex_17.png' },
+    { src: '/images/features/background/ai_bac_18.png', feature: 'background', isReal: false, feedback: 'AI generated - Check the unrealistic background textures and artificial blending.', explanationImage: '/images/features/ex_bac/ai_bac_ex_18.png' },
+    { src: '/images/features/background/ai_bac_19.png', feature: 'background', isReal: false, feedback: 'AI generated - Notice the artificial background elements and color bleeding from foreground.', explanationImage: '/images/features/ex_bac/ai_bac_ex_19.png' },
+    { src: '/images/features/background/ai_bac_20.png', feature: 'background', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth background and artificial texture patterns.', explanationImage: '/images/features/ex_bac/ai_bac_ex_20.png' },
+    
+    // Hair AI images
+    { src: '/images/features/hair/ai_hair_01.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the unnaturally smooth hair texture.', explanationImage: '/images/features/ex_hair/ai_hair_ex_01.png' },
+    { src: '/images/features/hair/ai_hair_02.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the overly uniform hair strands and artificial smoothness.', explanationImage: '/images/features/ex_hair/ai_hair_ex_02.png' },
+    { src: '/images/features/hair/ai_hair_03.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check the unrealistic hair flow and texture inconsistencies.', explanationImage: '/images/features/ex_hair/ai_hair_ex_03.png' },
+    { src: '/images/features/hair/ai_hair_04.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the artificial hair patterns and color blending issues.', explanationImage: '/images/features/ex_hair/ai_hair_ex_04.png' },
+    { src: '/images/features/hair/ai_hair_05.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth hair edges and texture uniformity.', explanationImage: '/images/features/ex_hair/ai_hair_ex_05.png' },
+    { src: '/images/features/hair/ai_hair_06.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check for artificial hair flow and unrealistic texture patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_06.png' },
+    { src: '/images/features/hair/ai_hair_07.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the overly smooth hair texture and artificial strand patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_07.png' },
+    { src: '/images/features/hair/ai_hair_08.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the unrealistic hair texture and color bleeding effects.', explanationImage: '/images/features/ex_hair/ai_hair_ex_08.png' },
+    { src: '/images/features/hair/ai_hair_09.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check the artificial hair patterns and unnaturally smooth texture.', explanationImage: '/images/features/ex_hair/ai_hair_ex_09.png' },
+    { src: '/images/features/hair/ai_hair_10.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the uniform hair strands and unrealistic texture flow.', explanationImage: '/images/features/ex_hair/ai_hair_ex_10.png' },
+    { src: '/images/features/hair/ai_hair_11.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the artificial hair texture and color blending issues.', explanationImage: '/images/features/ex_hair/ai_hair_ex_11.png' },
+    { src: '/images/features/hair/ai_hair_12.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check the unnaturally smooth hair edges and texture uniformity.', explanationImage: '/images/features/ex_hair/ai_hair_ex_12.png' },
+    { src: '/images/features/hair/ai_hair_13.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the unrealistic hair patterns and artificial smoothness.', explanationImage: '/images/features/ex_hair/ai_hair_ex_13.png' },
+    { src: '/images/features/hair/ai_hair_14.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the artificial hair flow and texture inconsistencies.', explanationImage: '/images/features/ex_hair/ai_hair_ex_14.png' },
+    { src: '/images/features/hair/ai_hair_15.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check the overly uniform hair strands and unrealistic texture.', explanationImage: '/images/features/ex_hair/ai_hair_ex_15.png' },
+    { src: '/images/features/hair/ai_hair_16.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the artificial hair patterns and color bleeding from background.', explanationImage: '/images/features/ex_hair/ai_hair_ex_16.png' },
+    { src: '/images/features/hair/ai_hair_17.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth hair texture and artificial patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_17.png' },
+    { src: '/images/features/hair/ai_hair_18.png', feature: 'hair', isReal: false, feedback: 'AI generated - Check the unrealistic hair flow and texture uniformity issues.', explanationImage: '/images/features/ex_hair/ai_hair_ex_18.png' },
+    { src: '/images/features/hair/ai_hair_19.png', feature: 'hair', isReal: false, feedback: 'AI generated - Notice the artificial hair texture and color blending problems.', explanationImage: '/images/features/ex_hair/ai_hair_ex_19.png' },
+    { src: '/images/features/hair/ai_hair_20.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the overly smooth hair edges and unrealistic texture patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_20.png' }
 ];
 
 // Fisher–Yates 随机打乱
@@ -111,7 +154,7 @@ const TestComponent = ({
                            attemptType,
                            featureFilter   // 新增：专项训练时传入 'asymmetries' | 'background' | 'hair'
                        }) => {
-    const { user } = useContext(UserContext);
+    const { user, updatePretestStatus } = useContext(UserContext);
 
     // 状态
     const [questions, setQuestions]       = useState([]);
@@ -132,19 +175,30 @@ const TestComponent = ({
             img => !img.isReal && (!featureFilter || img.feature === featureFilter)
         );
 
-        const reals = shuffle(realPool);
-        const ais   = shuffle(aiPool);
+        // 检查是否有足够的图片
+        const maxPossibleQuestions = Math.min(realPool.length, aiPool.length);
+        const actualQuestions = Math.min(totalQuestions, maxPossibleQuestions);
+        
+        if (actualQuestions < totalQuestions) {
+            console.warn(`Not enough images available. Requested: ${totalQuestions}, Available: ${actualQuestions}`);
+        }
+
+        // 随机打乱图片池
+        const shuffledReals = shuffle([...realPool]);
+        const shuffledAis = shuffle([...aiPool]);
 
         const list = [];
-        for (let i = 0; i < totalQuestions; i++) {
-            const realImg    = reals[i % reals.length];
-            const aiImg      = ais[i % ais.length];
+        for (let i = 0; i < actualQuestions; i++) {
+            const realImg = shuffledReals[i];
+            const aiImg = shuffledAis[i];
             const isLeftReal = Math.random() < 0.5;
+            
             list.push({
-                left:  isLeftReal ? realImg : aiImg,
-                right: isLeftReal ? aiImg   : realImg,
+                left: isLeftReal ? realImg : aiImg,
+                right: isLeftReal ? aiImg : realImg,
             });
         }
+        
         setQuestions(list);
         setCurrentQuestion(0);
     }, [totalQuestions, featureFilter]);
@@ -152,8 +206,12 @@ const TestComponent = ({
     useEffect(() => {
         if (!isTraining && currentQuestion === totalQuestions) {
             fetchStats();
+            // 如果是前测完成，更新用户状态
+            if (attemptType === 'pre_training') {
+                updatePretestStatus(true);
+            }
         }
-    }, [currentQuestion, isTraining, totalQuestions]);
+    }, [currentQuestion, isTraining, totalQuestions, attemptType, updatePretestStatus]);
 
     // —— 同步当前题目对 ——
     useEffect(() => {
@@ -164,7 +222,8 @@ const TestComponent = ({
 
     const fetchStats = async () => {
         try {
-            const res = await fetch('https://demo-production-b992.up.railway.app/api/submit-choice');
+            const url ='https://demo-production-b992.up.railway.app/api/submit-choice?userId='+encodeURIComponent(user.id);
+            const res = await fetch(url);
             if (!res.ok) throw new Error(`Status ${res.status}`);
             const { total, correct } = await res.json();
             setStats({ total, correct });
@@ -229,55 +288,117 @@ const TestComponent = ({
         : 0;
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-100">
-            <Navbar />
-            <div className="flex-1 p-6">
-                {/* 进度条 */}
-                <div className="mb-6">
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${progress}%` }}
-                        />
-                    </div>
-                    <div className="text-right text-sm text-gray-600 mt-1">
-                        {currentQuestion} / {totalQuestions}
-                    </div>
-                </div>
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse" style={{animationDelay: '2s'}}></div>
+                <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse" style={{animationDelay: '4s'}}></div>
+            </div>
 
-                <Prompt text="Click to select the image you think is real." />
+            <div className="relative z-10 flex flex-col min-h-screen">
+                <Navbar />
+                
+                <div className="flex-1 p-6 max-w-6xl mx-auto w-full">
+                    {/* Enhanced Progress Section */}
+                    <div className="mb-8">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-bold text-gray-800">
+                                            {isTraining ? 'Training Progress' : attemptType === 'pre_training' ? 'Pre-Test Progress' : 'Post-Test Progress'}
+                                        </h2>
+                                        <p className="text-sm text-gray-600">
+                                            {featureFilter ? `${featureFilter.charAt(0).toUpperCase() + featureFilter.slice(1)} Feature Training` : 'General AI Detection'}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-2xl font-bold text-gray-800">{currentQuestion}</div>
+                                    <div className="text-sm text-gray-600">of {totalQuestions}</div>
+                                </div>
+                            </div>
+                            
+                            {/* Enhanced Progress Bar */}
+                            <div className="relative">
+                                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                                    <div
+                                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 ease-out shadow-lg"
+                                        style={{ width: `${progress}%` }}
+                                    />
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <span className="text-xs font-semibold text-gray-700 bg-white/80 px-2 py-1 rounded">
+                                        {Math.round(progress)}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="flex justify-center items-center h-full">
-                    {currentQuestion < totalQuestions && currentPair.left && (
-                        <ImageSelector
-                            leftImage={currentPair.left.src}
-                            rightImage={currentPair.right.src}
-                            onImageClick={handleImageClick}
-                            selected={selectedImage}
-                        />
+                    {/* Enhanced Prompt Section */}
+                    <div className="mb-8">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 text-center">
+                            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                                Select the Real Image
+                            </h3>
+                            <p className="text-gray-600 max-w-md mx-auto">
+                                Click on the image you believe is real, not AI-generated. Take your time to examine the details carefully.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Enhanced Image Selection Area */}
+                    <div className="flex justify-center items-center min-h-[400px]">
+                        {currentQuestion < totalQuestions && currentPair.left && (
+                            <div className="w-full max-w-4xl">
+                                <ImageSelector
+                                    leftImage={currentPair.left.src}
+                                    rightImage={currentPair.right.src}
+                                    onImageClick={handleImageClick}
+                                    selected={selectedImage}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Enhanced Results Section */}
+                    {currentQuestion >= totalQuestions && (
+                        <div className="flex items-center justify-center min-h-[60vh]">
+                            <ResultSummary total={totalQuestions} accuracy={accuracy} />
+                        </div>
+                    )}
+
+                    {/* Enhanced Feedback Modal */}
+                    {showFeedback && (
+                        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                            <div className="animate-in slide-in-from-bottom-4 duration-300">
+                                <StaticFeedback
+                                    isVisible={showFeedback}
+                                    isCorrect={
+                                        (selectedImage === 'left'  && currentPair.left.isReal) ||
+                                        (selectedImage === 'right' && currentPair.right.isReal)
+                                    }
+                                    feedbackText={feedbackText}
+                                    explanationImage={explanationImage}
+                                    onReset={handleCloseFeedback}
+                                />
+                            </div>
+                        </div>
                     )}
                 </div>
-
-                {/* 全答完显示结果 */}
-                {currentQuestion >= totalQuestions && (
-                    <ResultSummary total={totalQuestions} accuracy={accuracy} />
-                )}
-
-                {/* 仅训练模式显示弹窗反馈 */}
-                {showFeedback && (
-                    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-                        <StaticFeedback
-                            isVisible={showFeedback}
-                            isCorrect={
-                                (selectedImage === 'left'  && currentPair.left.isReal) ||
-                                (selectedImage === 'right' && currentPair.right.isReal)
-                            }
-                            feedbackText={feedbackText}
-                            explanationImage={explanationImage}
-                            onReset={handleCloseFeedback}
-                        />
-                    </div>
-                )}
             </div>
             <Footer />
         </div>

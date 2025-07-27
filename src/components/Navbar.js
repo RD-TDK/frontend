@@ -1,10 +1,15 @@
-import React from 'react';
-
+import React, {useContext} from 'react';
+import { UserContext } from '../context/UserContext';
 const Navbar = () => {
     const navItems = [
         { name: 'Logout', path: '/login' },
     ];
+    const { setUser } = useContext(UserContext);
 
+    const handleLogout = () => {
+        setUser(null);
+        window.location.href = '/login';
+    };
     return (
         <nav className="bg-gray-700 p-4">
         <ul className="flex justify-end space-x-6">
@@ -15,7 +20,7 @@ const Navbar = () => {
             className={`text-white uppercase text-sm ${
                 item.path === '/' ? 'font-bold' : ''
             } hover:underline`}
-    onClick={(e) => e.preventDefault()} // Simplified routing
+    onClick={handleLogout} // Simplified routing
 >
     {item.name}
 </a>
