@@ -12,12 +12,14 @@ const Welcome = () => {
         navigate('/login');
     };
 
-    // Check if user has completed pretest
+    // 检查用户完成状态
     const hasCompletedPretest = user && user.pretestCompleted;
+    const hasCompletedTraining = user && user.trainingCompleted;
+    const hasCompletedPosttest = user && user.posttestCompleted;
 
     const menuItems = [
         {
-            title: hasCompletedPretest ? "Pretest Completed" : "Do Pretest",
+            title: hasCompletedPretest ? "Pretest Completed ✓" : "Do Pretest",
             description: hasCompletedPretest ? "You have completed the pretest" : "Assess your initial AI detection skills",
             icon: (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,31 +29,64 @@ const Welcome = () => {
             color: hasCompletedPretest ? "from-gray-400 to-gray-500" : "from-blue-500 to-blue-600",
             hoverColor: hasCompletedPretest ? "from-gray-400 to-gray-500" : "from-blue-600 to-blue-700",
             link: hasCompletedPretest ? null : "/pre-test",
-            disabled: hasCompletedPretest
+            disabled: hasCompletedPretest,
+            available: true // 总是可用
         },
         {
-            title: "Start Training",
-            description: "Begin your AI detection training journey",
+            title: hasCompletedTraining ? "Training Completed ✓" : "Start Training",
+            description: hasCompletedTraining ? "You have completed the training" : "Begin your AI detection training journey",
             icon: (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
             ),
-            color: "from-green-500 to-green-600",
-            hoverColor: "from-green-600 to-green-700",
-            link: "/training-intro"
+            color: hasCompletedTraining ? "from-gray-400 to-gray-500" : "from-green-500 to-green-600",
+            hoverColor: hasCompletedTraining ? "from-gray-400 to-gray-500" : "from-green-600 to-green-700",
+            link: hasCompletedTraining ? null : "/training-intro",
+            disabled: hasCompletedTraining,
+            available: hasCompletedPretest // 需要完成前测
         },
         {
-            title: "Verify Results",
-            description: "Check your training progress and results",
+            title: hasCompletedPosttest ? "Post-Test Completed ✓" : "Verify Results",
+            description: hasCompletedPosttest ? "You have completed the post-test" : "Check your training progress and results",
             icon: (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
             ),
-            color: "from-purple-500 to-purple-600",
-            hoverColor: "from-purple-600 to-purple-700",
-            link: "/post-test"
+            color: hasCompletedPosttest ? "from-gray-400 to-gray-500" : "from-purple-500 to-purple-600",
+            hoverColor: hasCompletedPosttest ? "from-gray-400 to-gray-500" : "from-purple-600 to-purple-700",
+            link: hasCompletedPosttest ? null : "/post-test",
+            disabled: hasCompletedPosttest,
+            available: hasCompletedTraining // 需要完成训练
+        },
+        {
+            title: "Delayed Test",
+            description: "One-week follow-up assessment to measure retention",
+            icon: (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            ),
+            color: "from-orange-500 to-orange-600",
+            hoverColor: "from-orange-600 to-orange-700",
+            link: "/delayed-test",
+            disabled: false,
+            available: hasCompletedPosttest // 需要完成后测
+        },
+        {
+            title: "Show My Results",
+            description: "View your post-test results and progress analysis",
+            icon: (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+            ),
+            color: "from-indigo-500 to-indigo-600",
+            hoverColor: "from-indigo-600 to-indigo-700",
+            link: "/results",
+            disabled: false,
+            available: hasCompletedPosttest // 需要完成后测
         },
         {
             title: "Feature Training",
@@ -63,7 +98,9 @@ const Welcome = () => {
             ),
             color: "from-pink-500 to-pink-600",
             hoverColor: "from-pink-600 to-pink-700",
-            link: "/feature-select"
+            link: "/feature-select",
+            disabled: false,
+            available: hasCompletedPosttest // 需要完成后测
         }
     ];
 
@@ -119,31 +156,63 @@ const Welcome = () => {
                         </p>
                     </div>
 
-                    {/* Menu Grid */}
+                                        {/* Menu Grid */}
                     <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                        {menuItems.map((item, index) => (
-                            item.disabled ? (
-                                <div key={index} className="group relative bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 cursor-not-allowed">
-                                    <div className="flex items-start space-x-4">
-                                        <div className={`w-12 h-12 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center shadow-lg opacity-60`}>
-                                            {item.icon}
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-xl font-bold text-gray-500 mb-2">
-                                                {item.title}
-                                            </h3>
-                                            <p className="text-gray-400">
-                                                {item.description}
-                                            </p>
-                                        </div>
-                                        <div className="opacity-60">
-                                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                            </svg>
+                        {menuItems.map((item, index) => {
+                            // 如果项目不可用，显示锁定状态
+                            if (!item.available) {
+                                return (
+                                    <div key={index} className="group relative bg-white/40 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 cursor-not-allowed opacity-50">
+                                        <div className="flex items-start space-x-4">
+                                            <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-xl flex items-center justify-center shadow-lg">
+                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                </svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="text-xl font-bold text-gray-400 mb-2">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="text-gray-400">
+                                                    {item.description}
+                                                </p>
+                                                <p className="text-xs text-gray-400 mt-2 font-medium">
+                                                    🔒 Complete previous steps to unlock
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ) : (
+                                );
+                            }
+                            
+                            // 如果项目已完成，显示完成状态
+                            if (item.disabled) {
+                                return (
+                                    <div key={index} className="group relative bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 cursor-not-allowed">
+                                        <div className="flex items-start space-x-4">
+                                            <div className={`w-12 h-12 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center shadow-lg opacity-60`}>
+                                                {item.icon}
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="text-xl font-bold text-gray-500 mb-2">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="text-gray-400">
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                            <div className="opacity-60">
+                                                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            
+                            // 如果项目可用且未完成，显示可点击状态
+                            return (
                                 <Link key={index} to={item.link}>
                                     <div className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl border border-white/20 transition-all duration-300 transform hover:scale-105">
                                         <div className="flex items-start space-x-4">
@@ -169,16 +238,34 @@ const Welcome = () => {
                                         <div className={`absolute inset-0 bg-gradient-to-r ${item.hoverColor} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
                                     </div>
                                 </Link>
-                            )
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Progress Indicator */}
                     <div className="mt-12 text-center">
-                        <div className="inline-flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-sm text-gray-600">Ready to start your training journey</span>
+                        <div className="inline-flex items-center space-x-4 bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
+                            <div className="flex items-center space-x-2">
+                                <div className={`w-3 h-3 rounded-full ${hasCompletedPretest ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                                <span className={`text-sm ${hasCompletedPretest ? 'text-green-600 font-medium' : 'text-gray-500'}`}>Pretest</span>
+                            </div>
+                            <div className="w-8 h-0.5 bg-gray-300"></div>
+                            <div className="flex items-center space-x-2">
+                                <div className={`w-3 h-3 rounded-full ${hasCompletedTraining ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                                <span className={`text-sm ${hasCompletedTraining ? 'text-green-600 font-medium' : 'text-gray-500'}`}>Training</span>
+                            </div>
+                            <div className="w-8 h-0.5 bg-gray-300"></div>
+                            <div className="flex items-center space-x-2">
+                                <div className={`w-3 h-3 rounded-full ${hasCompletedPosttest ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                                <span className={`text-sm ${hasCompletedPosttest ? 'text-green-600 font-medium' : 'text-gray-500'}`}>Post-Test</span>
+                            </div>
                         </div>
+                        <p className="text-xs text-gray-500 mt-3">
+                            {hasCompletedPosttest ? 'All main stages completed! You can now access delayed test and feature training.' : 
+                             hasCompletedTraining ? 'Training completed! Next: Post-Test' :
+                             hasCompletedPretest ? 'Pretest completed! Next: Training' :
+                             'Start with the pretest to begin your journey'}
+                        </p>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import ImageSelector            from './ImageSelector';
 import Prompt                   from './Prompt';
 import StaticFeedback           from './StaticFeedback';
 import ResultSummary            from './ResultSummary';
+import PostTestResult           from './PostTestResult';
 import Navbar                   from './Navbar';
 import Footer                   from './Footer';
 
@@ -154,7 +155,7 @@ const TestComponent = ({
                            attemptType,
                            featureFilter   // 新增：专项训练时传入 'asymmetries' | 'background' | 'hair'
                        }) => {
-    const { user, updatePretestStatus } = useContext(UserContext);
+    const { user, updatePretestStatus, updateTrainingStatus, updatePosttestStatus } = useContext(UserContext);
 
     // 状态
     const [questions, setQuestions]       = useState([]);
@@ -204,14 +205,18 @@ const TestComponent = ({
     }, [totalQuestions, featureFilter]);
 
     useEffect(() => {
-        if (!isTraining && currentQuestion === totalQuestions) {
+        if (currentQuestion === totalQuestions) {
             fetchStats();
-            // 如果是前测完成，更新用户状态
+            // 根据不同的测试类型更新用户状态
             if (attemptType === 'pre_training') {
                 updatePretestStatus(true);
+            } else if (attemptType === 'training') {
+                updateTrainingStatus(true);
+            } else if (attemptType === 'post_training') {
+                updatePosttestStatus(true);
             }
         }
-    }, [currentQuestion, isTraining, totalQuestions, attemptType, updatePretestStatus]);
+    }, [currentQuestion, totalQuestions, attemptType, updatePretestStatus, updateTrainingStatus, updatePosttestStatus]);
 
     // —— 同步当前题目对 ——
     useEffect(() => {
@@ -225,8 +230,8 @@ const TestComponent = ({
             const url ='https://demo-production-b992.up.railway.app/api/submit-choice?userId='+encodeURIComponent(user.id);
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Status ${res.status}`);
-            const { total, correct } = await res.json();
-            setStats({ total, correct });
+            const data = await res.json();
+            setStats({ total: data.total, correct: data.correct });
         } catch (err) {
             console.error('Stats fetch error:', err);
         }
@@ -245,12 +250,25 @@ const TestComponent = ({
         setExplanationImage(chosen.explanationImage);
         setShowFeedback(isTraining);
 
+        // 根据图片路径确定特征类型
+        let selectedFeature = null;
+        // 只有AI生成的图片才有特征，真实图片不需要特征
+        if (!chosen.isReal) {
+            if (chosen.src.includes('/asymmetries/') || chosen.src.includes('asymmetries')) {
+                selectedFeature = 'asymmetries';
+            } else if (chosen.src.includes('/background/') || chosen.src.includes('background')) {
+                selectedFeature = 'background';
+            } else if (chosen.src.includes('/hair/') || chosen.src.includes('hair')) {
+                selectedFeature = 'hair';
+            }
+        }
+
         // 构造 snake_case payload
         const choiceData = {
             userId:         user.id || 'anonymous',
             choice:         side,
             isCorrect:      isCorrect,
-            selectedFeature:null,
+            selectedFeature: selectedFeature,
             imagePath:      chosen.src,
             timestamp:      new Date().toISOString(),
             attemptType:    attemptType,
@@ -312,7 +330,11 @@ const TestComponent = ({
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-bold text-gray-800">
-                                            {isTraining ? 'Training Progress' : attemptType === 'pre_training' ? 'Pre-Test Progress' : 'Post-Test Progress'}
+                                            {isTraining ? 'Training Progress' : 
+                                             attemptType === 'pre_training' ? 'Pre-Test Progress' : 
+                                             attemptType === 'post_training' ? 'Post-Test Progress' :
+                                             attemptType === 'delayed_test' ? 'Delayed Test Progress' :
+                                             'Test Progress'}
                                         </h2>
                                         <p className="text-sm text-gray-600">
                                             {featureFilter ? `${featureFilter.charAt(0).toUpperCase() + featureFilter.slice(1)} Feature Training` : 'General AI Detection'}
@@ -377,7 +399,11 @@ const TestComponent = ({
                     {/* Enhanced Results Section */}
                     {currentQuestion >= totalQuestions && (
                         <div className="flex items-center justify-center min-h-[60vh]">
-                            <ResultSummary total={totalQuestions} accuracy={accuracy} />
+                            {attemptType === 'post_training' ? (
+                                <PostTestResult total={totalQuestions} accuracy={accuracy} />
+                            ) : (
+                                <ResultSummary total={totalQuestions} accuracy={accuracy} />
+                            )}
                         </div>
                     )}
 

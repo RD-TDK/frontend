@@ -7,6 +7,8 @@ import PreTest from './pages/PreTest';
 import TrainingIntroPage from './pages/TrainingIntroPage';
 import TrainingTest from './pages/TrainingTest';
 import PostTest from './pages/PostTest';
+import DelayedTest from './pages/DelayedTest';
+import ResultsPage from './pages/ResultsPage';
 import FeatureSelectPage from './pages/FeatureSelectPage';
 import FeatureTrainingPage from './pages/FeatureTrainingPage';
 import { UserContext } from './context/UserContext';
@@ -32,6 +34,8 @@ const App = () => {
                     <Route path="/training-intro" element={<TrainingIntroPage />} />
                     <Route path="/training-test" element={<TrainingTest />} />
                     <Route path="/post-test" element={<PostTest />} />
+                    <Route path="/delayed-test" element={<DelayedTest />} />
+                    <Route path="/results" element={<ResultsPage />} />
                     <Route path="/feature-select" element={<FeatureSelectPage />} />
                     <Route path="/feature-training/:feature" element={<FeatureTrainingPage />} />
                     {/** 未匹配到路由时重定向回欢迎页 */}
