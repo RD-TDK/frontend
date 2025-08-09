@@ -155,7 +155,7 @@ const TestComponent = ({
                            attemptType,
                            featureFilter   // 新增：专项训练时传入 'asymmetries' | 'background' | 'hair'
                        }) => {
-    const { user, updatePretestStatus, updateTrainingStatus, updatePosttestStatus } = useContext(UserContext);
+    const { user, updatePretestStatus, updateTrainingStatus, updatePosttestStatus, updateDelayedTestStatus } = useContext(UserContext);
 
     // 状态
     const [questions, setQuestions]       = useState([]);
@@ -214,9 +214,11 @@ const TestComponent = ({
                 updateTrainingStatus(true);
             } else if (attemptType === 'post_training') {
                 updatePosttestStatus(true);
+            } else if (attemptType === 'delayed_test') {
+                updateDelayedTestStatus(true);
             }
         }
-    }, [currentQuestion, totalQuestions, attemptType, updatePretestStatus, updateTrainingStatus, updatePosttestStatus]);
+    }, [currentQuestion, totalQuestions, attemptType, updatePretestStatus, updateTrainingStatus, updatePosttestStatus, updateDelayedTestStatus]);
 
     // —— 同步当前题目对 ——
     useEffect(() => {
@@ -227,7 +229,7 @@ const TestComponent = ({
 
     const fetchStats = async () => {
         try {
-            const url ='https://demo-production-b992.up.railway.app/api/submit-choice?userId='+encodeURIComponent(user.id);
+            const url ='http://localhost:8080/api/submit-choice?userId='+encodeURIComponent(user.id);
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Status ${res.status}`);
             const data = await res.json();
@@ -275,7 +277,7 @@ const TestComponent = ({
         };
 
         try {
-            const res = await fetch('https://demo-production-b992.up.railway.app/api/submit-choice', {
+            const res = await fetch('http://localhost:8080/api/submit-choice', {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body:    JSON.stringify(choiceData),

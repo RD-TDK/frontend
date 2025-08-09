@@ -16,6 +16,7 @@ const Welcome = () => {
     const hasCompletedPretest = user && user.pretestCompleted;
     const hasCompletedTraining = user && user.trainingCompleted;
     const hasCompletedPosttest = user && user.posttestCompleted;
+    const hasCompletedDelayedTest = user && user.delayedTestCompleted;
 
     const menuItems = [
         {
@@ -61,17 +62,17 @@ const Welcome = () => {
             available: hasCompletedTraining // 需要完成训练
         },
         {
-            title: "Delayed Test",
-            description: "One-week follow-up assessment to measure retention",
+            title: hasCompletedDelayedTest ? "Delayed Test Completed ✓" : "Delayed Test",
+            description: hasCompletedDelayedTest ? "You have completed the delayed test" : "One-week follow-up assessment to measure retention",
             icon: (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             ),
-            color: "from-orange-500 to-orange-600",
-            hoverColor: "from-orange-600 to-orange-700",
-            link: "/delayed-test",
-            disabled: false,
+            color: hasCompletedDelayedTest ? "from-gray-400 to-gray-500" : "from-orange-500 to-orange-600",
+            hoverColor: hasCompletedDelayedTest ? "from-gray-400 to-gray-500" : "from-orange-600 to-orange-700",
+            link: hasCompletedDelayedTest ? null : "/delayed-test",
+            disabled: hasCompletedDelayedTest,
             available: hasCompletedPosttest // 需要完成后测
         },
         {

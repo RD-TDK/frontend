@@ -9,33 +9,81 @@ const UserContextProvider = ({ children }) => {
         isAuthenticated: false,
         pretestCompleted: false,
         trainingCompleted: false,
-        posttestCompleted: false
+        posttestCompleted: false,
+        delayedTestCompleted: false
     });
 
-    // 可选：启动时校验本地登录状态
+    // 从后端获取用户进度
+    const fetchUserProgress = async (userId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/user-progress/${userId.toString()}`);
+            if (response.ok) {
+                const progress = await response.json();
+                return {
+                    pretestCompleted: progress.pretestCompleted || false,
+                    trainingCompleted: progress.trainingCompleted || false,
+                    posttestCompleted: progress.posttestCompleted || false,
+                    delayedTestCompleted: progress.delayedTestCompleted || false
+                };
+            }
+        } catch (err) {
+            console.error('Failed to fetch user progress:', err);
+        }
+        return {
+            pretestCompleted: false,
+            trainingCompleted: false,
+            posttestCompleted: false,
+            delayedTestCompleted: false
+        };
+    };
+
+    // 更新用户进度到后端
+    const updateProgressToBackend = async (userId, progressType, completed) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/user-progress/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: userId,
+                    progressType: progressType,
+                    completed: completed
+                })
+            });
+            return response.ok;
+        } catch (err) {
+            console.error('Failed to update progress:', err);
+            return false;
+        }
+    };
+
+    // 启动时校验本地登录状态
     useEffect(() => {
         const checkAuth = async () => {
             const storedId = localStorage.getItem('userId');
             const storedGender = localStorage.getItem('gender');
-            const storedPretestCompleted = localStorage.getItem('pretestCompleted') === 'true';
-            const storedTrainingCompleted = localStorage.getItem('trainingCompleted') === 'true';
-            const storedPosttestCompleted = localStorage.getItem('posttestCompleted') === 'true';
             if (storedId && storedGender) {
                 try {
-                    const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
+                    const response = await fetch('http://localhost:8080/api/user/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: storedId, gender: storedGender }),
                     });
                     if (response.ok) {
                         const u = await response.json();
+                        // 从后端获取用户进度
+                        const progress = await fetchUserProgress(u.id);
+                        
                         setUser({ 
                             ...u, 
                             isAuthenticated: true, 
-                            pretestCompleted: storedPretestCompleted,
-                            trainingCompleted: storedTrainingCompleted,
-                            posttestCompleted: storedPosttestCompleted
+                            ...progress
                         });
+                        
+                        // 备份到localStorage
+                        localStorage.setItem('pretestCompleted', progress.pretestCompleted.toString());
+                        localStorage.setItem('trainingCompleted', progress.trainingCompleted.toString());
+                        localStorage.setItem('posttestCompleted', progress.posttestCompleted.toString());
+                        localStorage.setItem('delayedTestCompleted', progress.delayedTestCompleted.toString());
                     } else {
                         // 本地缓存失效，清理
                         localStorage.removeItem('userId');
@@ -43,6 +91,7 @@ const UserContextProvider = ({ children }) => {
                         localStorage.removeItem('pretestCompleted');
                         localStorage.removeItem('trainingCompleted');
                         localStorage.removeItem('posttestCompleted');
+                        localStorage.removeItem('delayedTestCompleted');
                     }
                 } catch (err) {
                     console.error('Auth check failed:', err);
@@ -54,9 +103,7 @@ const UserContextProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            //https://demo-production-b992.up.railway.app___http://localhost:8080/api/user/login
-            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
-            /*const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {*/
+            const response = await fetch('http://localhost:8080/api/user/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -69,18 +116,23 @@ const UserContextProvider = ({ children }) => {
                 return false;
             }
             const u = await response.json();
-            const storedPretestCompleted = localStorage.getItem('pretestCompleted') === 'true';
-            const storedTrainingCompleted = localStorage.getItem('trainingCompleted') === 'true';
-            const storedPosttestCompleted = localStorage.getItem('posttestCompleted') === 'true';
+            
+            // 从后端获取用户进度
+            const progress = await fetchUserProgress(u.id);
+            
             setUser({ 
                 ...u, 
                 isAuthenticated: true, 
-                pretestCompleted: storedPretestCompleted,
-                trainingCompleted: storedTrainingCompleted,
-                posttestCompleted: storedPosttestCompleted
+                ...progress
             });
+            
+            // 保存到localStorage作为备份
             localStorage.setItem('userId', u.id);
             localStorage.setItem('gender', u.gender);
+            localStorage.setItem('pretestCompleted', progress.pretestCompleted.toString());
+            localStorage.setItem('trainingCompleted', progress.trainingCompleted.toString());
+            localStorage.setItem('posttestCompleted', progress.posttestCompleted.toString());
+            localStorage.setItem('delayedTestCompleted', progress.delayedTestCompleted.toString());
             return true;
         } catch (error) {
             console.error('Login error:', error);
@@ -91,8 +143,7 @@ const UserContextProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            //https://demo-production-b992.up.railway.app
-            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/register', {
+            const response = await fetch('http://localhost:8080/api/user/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -110,13 +161,15 @@ const UserContextProvider = ({ children }) => {
                 isAuthenticated: true, 
                 pretestCompleted: false,
                 trainingCompleted: false,
-                posttestCompleted: false
+                posttestCompleted: false,
+                delayedTestCompleted: false
             });
             localStorage.setItem('userId', u.id);
             localStorage.setItem('gender', u.gender);
             localStorage.setItem('pretestCompleted', 'false');
             localStorage.setItem('trainingCompleted', 'false');
             localStorage.setItem('posttestCompleted', 'false');
+            localStorage.setItem('delayedTestCompleted', 'false');
             return true;
         } catch (error) {
             console.error('Register error:', error);
@@ -132,28 +185,47 @@ const UserContextProvider = ({ children }) => {
             isAuthenticated: false, 
             pretestCompleted: false,
             trainingCompleted: false,
-            posttestCompleted: false
+            posttestCompleted: false,
+            delayedTestCompleted: false
         });
         localStorage.removeItem('userId');
         localStorage.removeItem('gender');
         localStorage.removeItem('pretestCompleted');
         localStorage.removeItem('trainingCompleted');
         localStorage.removeItem('posttestCompleted');
+        localStorage.removeItem('delayedTestCompleted');
     };
 
-    const updatePretestStatus = (completed) => {
+    const updatePretestStatus = async (completed) => {
         setUser(prevUser => ({ ...prevUser, pretestCompleted: completed }));
+        if (user.id) {
+            await updateProgressToBackend(user.id.toString(), 'pretest', completed);
+        }
         localStorage.setItem('pretestCompleted', completed.toString());
     };
 
-    const updateTrainingStatus = (completed) => {
+    const updateTrainingStatus = async (completed) => {
         setUser(prevUser => ({ ...prevUser, trainingCompleted: completed }));
+        if (user.id) {
+            await updateProgressToBackend(user.id.toString(), 'training', completed);
+        }
         localStorage.setItem('trainingCompleted', completed.toString());
     };
 
-    const updatePosttestStatus = (completed) => {
+    const updatePosttestStatus = async (completed) => {
         setUser(prevUser => ({ ...prevUser, posttestCompleted: completed }));
+        if (user.id) {
+            await updateProgressToBackend(user.id.toString(), 'posttest', completed);
+        }
         localStorage.setItem('posttestCompleted', completed.toString());
+    };
+
+    const updateDelayedTestStatus = async (completed) => {
+        setUser(prevUser => ({ ...prevUser, delayedTestCompleted: completed }));
+        if (user.id) {
+            await updateProgressToBackend(user.id.toString(), 'delayed_test', completed);
+        }
+        localStorage.setItem('delayedTestCompleted', completed.toString());
     };
 
     return (
@@ -164,7 +236,8 @@ const UserContextProvider = ({ children }) => {
             logout, 
             updatePretestStatus, 
             updateTrainingStatus, 
-            updatePosttestStatus 
+            updatePosttestStatus,
+            updateDelayedTestStatus
         }}>
             {children}
         </UserContext.Provider>

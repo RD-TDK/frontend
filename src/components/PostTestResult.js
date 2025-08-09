@@ -22,7 +22,7 @@ const PostTestResult = ({ total, accuracy }) => {
         const fetchData = async () => {
             try {
                 // 获取前测统计数据
-                const pretestUrl = `https://demo-production-b992.up.railway.app/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=pre_training`;
+                const pretestUrl = `http://localhost:8080/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=pre_training`;
                 const pretestRes = await fetch(pretestUrl);
                 if (pretestRes.ok) {
                     const pretestData = await pretestRes.json();
@@ -30,7 +30,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 }
 
                 // 获取后测详细选择数据
-                const choicesUrl = `https://demo-production-b992.up.railway.app/api/submit-choice/choices?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
+                const choicesUrl = `http://localhost:8080/api/submit-choice/choices?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
                 const choicesRes = await fetch(choicesUrl);
                 if (choicesRes.ok) {
                     const choicesData = await choicesRes.json();
@@ -54,7 +54,7 @@ const PostTestResult = ({ total, accuracy }) => {
     // 基于用户选择生成个性化特征训练建议
     const generateFeatureRecommendations = () => {
         const recommendations = [];
-        
+
         // 如果没有详细数据，不生成建议（等待数据加载）
         if (!posttestChoices || posttestChoices.length === 0) {
             return recommendations;
@@ -69,11 +69,11 @@ const PostTestResult = ({ total, accuracy }) => {
 
         // 分析每个选择
         console.log('Analyzing posttest choices:', posttestChoices);
-        
+
         posttestChoices.forEach(choice => {
             const selectedFeature = choice.selectedFeature;
             const imagePath = choice.imagePath;
-            
+
             // 确定特征类型（优先使用selectedFeature，如果没有则从图片路径推断）
             let feature = selectedFeature;
             if (!feature && !imagePath.includes('/real/')) {
@@ -86,14 +86,14 @@ const PostTestResult = ({ total, accuracy }) => {
                     feature = 'hair';
                 }
             }
-            
+
             console.log(`Choice analysis:`, {
                 imagePath,
                 selectedFeature,
                 inferredFeature: feature,
                 isCorrect: choice.isCorrect
             });
-            
+
             if (feature && featureAnalysis[feature]) {
                 featureAnalysis[feature].total++;
                 if (choice.isCorrect) {
@@ -106,7 +106,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 }
             }
         });
-        
+
         console.log('Feature analysis result:', featureAnalysis);
 
         // 计算每个特征的准确率并生成建议
@@ -116,7 +116,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 const featureAccuracy = (data.correct / data.total) * 100;
                 const errorCount = data.errors.length;
                 console.log(`${feature} accuracy: ${featureAccuracy}% (${data.correct}/${data.total}), errors: ${errorCount}`);
-                
+
                 // 基于错误数量设置优先级
                 let priority = 'low';
                 if (errorCount >= 3) {
@@ -124,7 +124,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 } else if (errorCount >= 2) {
                     priority = 'medium';
                 }
-                
+
                 // 根据优先级生成不同的建议文本
                 let reason = '';
                 if (priority === 'high') {
@@ -134,7 +134,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 } else {
                     reason = `You made ${errorCount} error${errorCount > 1 ? 's' : ''} in ${feature} detection. Minor improvement needed.`;
                 }
-                
+
                 recommendations.push({
                     feature: feature,
                     reason: reason,
@@ -190,7 +190,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50"></div>
                 <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
                 <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl"></div>
-                
+
                 <div className="relative z-10">
                     {/* Header */}
                     <div className="mb-6">
@@ -270,11 +270,11 @@ const PostTestResult = ({ total, accuracy }) => {
                                     <div className="text-2xl font-bold text-green-600">{accuracy}%</div>
                                 </div>
                             </div>
-                            
+
                             {/* Improvement Indicator */}
                             <div className={`rounded-xl p-3 mb-3 ${
-                                isImproved 
-                                    ? 'bg-gradient-to-r from-green-50 to-emerald-100 border border-green-200' 
+                                isImproved
+                                    ? 'bg-gradient-to-r from-green-50 to-emerald-100 border border-green-200'
                                     : 'bg-gradient-to-r from-yellow-50 to-orange-100 border border-yellow-200'
                             }`}>
                                 <div className="flex items-center justify-center space-x-2 mb-2">
@@ -296,7 +296,7 @@ const PostTestResult = ({ total, accuracy }) => {
                                 <p className={`text-sm ${
                                     isImproved ? 'text-green-700' : 'text-yellow-700'
                                 }`}>
-                                    {isImproved 
+                                    {isImproved
                                         ? `You improved by ${improvement.toFixed(1)}% ${isSignificant ? '— Excellent progress!' : '— Keep up the good work!'}`
                                         : `Your performance ${improvement === 0 ? 'remained the same' : `decreased by ${Math.abs(improvement).toFixed(1)}%`}. Consider more practice.`
                                     }
@@ -312,16 +312,16 @@ const PostTestResult = ({ total, accuracy }) => {
                             <div className="space-y-2">
                                 {recommendations.map((rec, index) => (
                                     <div key={index} className={`rounded-xl p-3 border ${
-                                        rec.priority === 'high' 
-                                            ? 'bg-gradient-to-r from-red-50 to-pink-100 border-red-200' 
+                                        rec.priority === 'high'
+                                            ? 'bg-gradient-to-r from-red-50 to-pink-100 border-red-200'
                                             : rec.priority === 'medium'
                                             ? 'bg-gradient-to-r from-yellow-50 to-orange-100 border-yellow-200'
                                             : 'bg-gradient-to-r from-blue-50 to-indigo-100 border-blue-200'
                                     }`}>
                                         <div className="flex items-start space-x-3">
                                             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                                rec.priority === 'high' ? 'bg-red-500' : 
-                                                rec.priority === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
+                                                rec.priority === 'high' ? 'bg-red-500' :
+                                                    rec.priority === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
                                             }`}>
                                                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -330,14 +330,14 @@ const PostTestResult = ({ total, accuracy }) => {
                                             <div className="flex-1">
                                                 <div className="flex items-center space-x-2 mb-1">
                                                     <span className={`font-semibold capitalize ${
-                                                        rec.priority === 'high' ? 'text-red-700' : 
-                                                        rec.priority === 'medium' ? 'text-yellow-700' : 'text-blue-700'
+                                                        rec.priority === 'high' ? 'text-red-700' :
+                                                            rec.priority === 'medium' ? 'text-yellow-700' : 'text-blue-700'
                                                     }`}>
                                                         {rec.feature} Training
                                                     </span>
                                                     <span className={`text-xs px-2 py-1 rounded-full ${
-                                                        rec.priority === 'high' 
-                                                            ? 'bg-red-200 text-red-700' 
+                                                        rec.priority === 'high'
+                                                            ? 'bg-red-200 text-red-700'
                                                             : rec.priority === 'medium'
                                                             ? 'bg-yellow-200 text-yellow-700'
                                                             : 'bg-blue-200 text-blue-700'
