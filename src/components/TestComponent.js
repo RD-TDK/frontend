@@ -229,7 +229,7 @@ const TestComponent = ({
 
     const fetchStats = async () => {
         try {
-            const url ='http://localhost:8080/api/submit-choice?userId='+encodeURIComponent(user.id);
+            const url ='https://demo-production-b992.up.railway.app/api/submit-choice?userId='+encodeURIComponent(user.id);
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Status ${res.status}`);
             const data = await res.json();
@@ -277,7 +277,7 @@ const TestComponent = ({
         };
 
         try {
-            const res = await fetch('http://localhost:8080/api/submit-choice', {
+            const res = await fetch('https://demo-production-b992.up.railway.app/api/submit-choice', {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body:    JSON.stringify(choiceData),

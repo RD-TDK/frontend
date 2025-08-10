@@ -13,7 +13,7 @@ const ResultsPage = () => {
     useEffect(() => {
         const fetchPosttestStats = async () => {
             try {
-                const url = `http://localhost:8080/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
+                const url = `https://demo-production-b992.up.railway.app/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
                 const res = await fetch(url);
                 if (res.ok) {
                     const data = await res.json();

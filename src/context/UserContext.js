@@ -16,7 +16,7 @@ const UserContextProvider = ({ children }) => {
     // 从后端获取用户进度
     const fetchUserProgress = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/user-progress/${userId.toString()}`);
+            const response = await fetch(`https://demo-production-b992.up.railway.app/api/user-progress/${userId.toString()}`);
             if (response.ok) {
                 const progress = await response.json();
                 return {
@@ -40,7 +40,7 @@ const UserContextProvider = ({ children }) => {
     // 更新用户进度到后端
     const updateProgressToBackend = async (userId, progressType, completed) => {
         try {
-            const response = await fetch('http://localhost:8080/api/user-progress/update', {
+            const response = await fetch('https://demo-production-b992.up.railway.app/api/user-progress/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -63,7 +63,7 @@ const UserContextProvider = ({ children }) => {
             const storedGender = localStorage.getItem('gender');
             if (storedId && storedGender) {
                 try {
-                    const response = await fetch('http://localhost:8080/api/user/login', {
+                    const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: storedId, gender: storedGender }),
@@ -103,7 +103,7 @@ const UserContextProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const response = await fetch('http://localhost:8080/api/user/login', {
+            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -143,7 +143,7 @@ const UserContextProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const response = await fetch('http://localhost:8080/api/user/register', {
+            const response = await fetch('https://demo-production-b992.up.railway.app/api/user/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
