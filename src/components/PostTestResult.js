@@ -22,7 +22,7 @@ const PostTestResult = ({ total, accuracy }) => {
         const fetchData = async () => {
             try {
                 // 获取前测统计数据
-                const pretestUrl = `http://localhost:8080/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=pre_training`;
+                const pretestUrl = `https://demo-production-b992.up.railway.app/api/submit-choice?userId=${encodeURIComponent(user.id)}&attemptType=pre_training`;
                 const pretestRes = await fetch(pretestUrl);
                 if (pretestRes.ok) {
                     const pretestData = await pretestRes.json();
@@ -30,7 +30,7 @@ const PostTestResult = ({ total, accuracy }) => {
                 }
 
                 // 获取后测详细选择数据
-                const choicesUrl = `http://localhost:8080/api/submit-choice/choices?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
+                const choicesUrl = `https://demo-production-b992.up.railway.app/api/submit-choice/choices?userId=${encodeURIComponent(user.id)}&attemptType=post_training`;
                 const choicesRes = await fetch(choicesUrl);
                 if (choicesRes.ok) {
                     const choicesData = await choicesRes.json();
