@@ -10,27 +10,27 @@ const TrainingIntroPage = () => {
             name: 'Asymmetries',
             description: 'AI-generated images often have asymmetrical features, especially in faces. Look for uneven eyes, different-sized ears, or misaligned facial features.',
             examples: [
-                '/images/features/ex_asy/asy_ex_01.png',
-                '/images/features/ex_asy/asy_ex_02.png',
-                '/images/features/ex_asy/asy_ex_03.png'
+                '/images/preIntro/asy_ex_01.png',
+                '/images/preIntro/asy_ex_02.png',
+                '/images/preIntro/asy_ex_03.png'
             ],
             tips: [
                 'Check if both eyes are the same size and shape',
                 'Look for uneven facial features',
-                'Notice if ears are positioned differently'
+                'Notice if ear rings are positioned differently'
             ]
         },
         {
             name: 'Background Issues',
             description: 'AI often struggles with complex backgrounds. Look for blurry areas, unrealistic objects, or impossible perspectives.',
             examples: [
-                '/images/features/ex_bac/ai_bac_ex_01.png',
-                '/images/features/ex_bac/ai_bac_ex_02.png',
-                '/images/features/ex_bac/ai_bac_ex_03.png'
+                '/images/preIntro/bac_ex_01.png',
+                '/images/preIntro/bac_ex_02.png',
+                '/images/preIntro/bac_ex_03.png'
             ],
             tips: [
                 'Check for blurry or unrealistic background elements',
-                'Look for objects that seem to float or have no shadows',
+                'Look for objects that appear unnatural or distorted.',
                 'Notice if the perspective doesn\'t make sense'
             ]
         },
@@ -38,9 +38,9 @@ const TrainingIntroPage = () => {
             name: 'Hair and Texture',
             description: 'AI has difficulty with fine details like hair strands and textures. Look for overly smooth or unrealistic hair patterns.',
             examples: [
-                '/images/features/ex_hair/ai_hair_ex_01.png',
-                '/images/features/ex_hair/ai_hair_ex_02.png',
-                '/images/features/ex_hair/ai_hair_ex_03.png'
+                '/images/preIntro/hair_ex_01.png',
+                '/images/preIntro/hair_ex_02.png',
+                '/images/preIntro/hair_ex_03.png'
             ],
             tips: [
                 'Look for unnaturally smooth hair',
