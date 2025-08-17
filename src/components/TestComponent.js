@@ -149,6 +149,59 @@ function shuffle(arr) {
     return a;
 }
 
+// 新增：Post-test 完成提示组件
+const PostTestCompletion = ({ total, accuracy, onViewResults }) => {
+    const [showResults, setShowResults] = useState(false);
+    
+    if (showResults) {
+        return <PostTestResult total={total} accuracy={accuracy} />;
+    }
+    
+    return (
+        <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-white/20 text-center max-w-2xl mx-4">
+                <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                    Post-Test Completed!
+                </h2>
+                
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                    Congratulations! You have successfully completed the post-training test. 
+                    Your results have been saved and you can now view your detailed performance analysis 
+                    and personalized training recommendations.
+                </p>
+                
+                <div className="space-y-4">
+                    <button
+                        onClick={() => setShowResults(true)}
+                        className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    >
+                        View My Results & Analysis
+                    </button>
+                    
+                    <button
+                        onClick={() => window.location.href = '/welcome'}
+                        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+                    >
+                        Back to Welcome Page
+                    </button>
+                </div>
+                
+                <div className="mt-8 p-4 bg-blue-50 rounded-xl">
+                    <p className="text-sm text-blue-700">
+                        💡 <strong>Tip:</strong> You can always access your results later from the Welcome page by clicking "Show My Results".
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const TestComponent = ({
                            totalQuestions,
                            isTraining,
@@ -402,7 +455,7 @@ const TestComponent = ({
                     {currentQuestion >= totalQuestions && (
                         <div className="flex items-center justify-center min-h-[60vh]">
                             {attemptType === 'post_training' ? (
-                                <PostTestResult total={totalQuestions} accuracy={accuracy} />
+                                <PostTestCompletion total={totalQuestions} accuracy={accuracy} />
                             ) : (
                                 <ResultSummary total={totalQuestions} accuracy={accuracy} />
                             )}
