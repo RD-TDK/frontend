@@ -140,6 +140,33 @@ const IMAGES = [
     { src: '/images/features/hair/ai_hair_20.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the overly smooth hair edges and unrealistic texture patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_20.png' }
 ];
 
+// Pre-test 专用图片池
+const PRE_TEST_IMAGES = [
+    // Pre-test 真实图片
+    { src: '/images/pre_test/pre_01.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_02.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_03.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_04.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_05.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_06.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_07.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_08.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_09.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/pre_test/pre_10.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    
+    // Pre-test AI 图片
+    { src: '/images/pre_ai/ai_01.png', isReal: false, feedback: 'AI generated - Notice the artificial features and unrealistic proportions.', explanationImage: null },
+    { src: '/images/pre_ai/ai_02.png', isReal: false, feedback: 'AI generated - Look for the unnatural symmetry and artificial details.', explanationImage: null },
+    { src: '/images/pre_ai/ai_03.png', isReal: false, feedback: 'AI generated - Check the unrealistic facial features and artificial patterns.', explanationImage: null },
+    { src: '/images/pre_ai/ai_04.png', isReal: false, feedback: 'AI generated - Notice the artificial proportions and unnatural textures.', explanationImage: null },
+    { src: '/images/pre_ai/ai_05.png', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth elements and artificial blending.', explanationImage: null },
+    { src: '/images/pre_ai/ai_06.png', isReal: false, feedback: 'AI generated - Check the unrealistic patterns and artificial details.', explanationImage: null },
+    { src: '/images/pre_ai/ai_07.png', isReal: false, feedback: 'AI generated - Notice the artificial textures and color inconsistencies.', explanationImage: null },
+    { src: '/images/pre_ai/ai_08.png', isReal: false, feedback: 'AI generated - Look for the unnaturally uniform features and artificial smoothness.', explanationImage: null },
+    { src: '/images/pre_ai/ai_09.png', isReal: false, feedback: 'AI generated - Check the unrealistic proportions and artificial patterns.', explanationImage: null },
+    { src: '/images/pre_ai/ai_10.png', isReal: false, feedback: 'AI generated - Notice the artificial details and unnatural blending.', explanationImage: null }
+];
+
 // Post-test 专用图片池
 const POST_TEST_IMAGES = [
     // Post-test 真实图片
@@ -245,12 +272,17 @@ const TestComponent = ({
     useEffect(() => {
         let realPool, aiPool;
         
-        // 如果是 post-test，使用专门的图片池
-        if (attemptType === 'post_training') {
+        // 根据测试类型选择不同的图片池
+        if (attemptType === 'pre_training') {
+            // Pre-test 使用专门的图片池
+            realPool = PRE_TEST_IMAGES.filter(img => img.isReal);
+            aiPool = PRE_TEST_IMAGES.filter(img => !img.isReal);
+        } else if (attemptType === 'post_training') {
+            // Post-test 使用专门的图片池
             realPool = POST_TEST_IMAGES.filter(img => img.isReal);
             aiPool = POST_TEST_IMAGES.filter(img => !img.isReal);
         } else {
-            // 其他测试使用通用图片池
+            // 其他测试（training, delayed_test, feature training）使用通用图片池
             realPool = IMAGES.filter(img => img.isReal);
             aiPool = IMAGES.filter(
                 img => !img.isReal && (!featureFilter || img.feature === featureFilter)
