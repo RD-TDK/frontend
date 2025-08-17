@@ -1,5 +1,6 @@
 // src/components/TestComponent.js
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext }          from '../context/UserContext';
 import ImageSelector            from './ImageSelector';
 import Prompt                   from './Prompt';
@@ -178,11 +179,11 @@ function shuffle(arr) {
 
 // Post-test 完成提示组件
 const PostTestCompletion = ({ total, accuracy }) => {
-    const [showResults, setShowResults] = useState(false);
+    const navigate = useNavigate();
     
-    if (showResults) {
-        return <PostTestResult total={total} accuracy={accuracy} />;
-    }
+    const handleBackToWelcome = () => {
+        navigate('/welcome');
+    };
     
     return (
         <div className="flex items-center justify-center min-h-[60vh]">
@@ -200,20 +201,13 @@ const PostTestCompletion = ({ total, accuracy }) => {
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                     Congratulations! You have successfully completed the post-training test. 
                     Your results have been saved and you can now view your detailed performance analysis 
-                    and personalized training recommendations.
+                    and personalized training recommendations from the Welcome page.
                 </p>
                 
                 <div className="space-y-4">
                     <button
-                        onClick={() => setShowResults(true)}
+                        onClick={handleBackToWelcome}
                         className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                        View My Results & Analysis
-                    </button>
-                    
-                    <button
-                        onClick={() => window.location.href = '/welcome'}
-                        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
                     >
                         Back to Welcome Page
                     </button>
@@ -221,7 +215,7 @@ const PostTestCompletion = ({ total, accuracy }) => {
                 
                 <div className="mt-8 p-4 bg-blue-50 rounded-xl">
                     <p className="text-sm text-blue-700">
-                        💡 <strong>Tip:</strong> You can always access your results later from the Welcome page by clicking "Show My Results".
+                        💡 <strong>Tip:</strong> You can access your results and analysis from the Welcome page by clicking "Show My Results".
                     </p>
                 </div>
             </div>
