@@ -139,6 +139,33 @@ const IMAGES = [
     { src: '/images/features/hair/ai_hair_20.png', feature: 'hair', isReal: false, feedback: 'AI generated - Look for the overly smooth hair edges and unrealistic texture patterns.', explanationImage: '/images/features/ex_hair/ai_hair_ex_20.png' }
 ];
 
+// Post-test 专用图片池
+const POST_TEST_IMAGES = [
+    // Post-test 真实图片
+    { src: '/images/post_test/post_01.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_02.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_03.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_04.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_05.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_06.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_07.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_08.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_9.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/post_test/post_10.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    
+    // Post-test AI 图片
+    { src: '/images/post_ai/ai_01.png', isReal: false, feedback: 'AI generated - Notice the artificial features and unrealistic proportions.', explanationImage: null },
+    { src: '/images/post_ai/ai_02.png', isReal: false, feedback: 'AI generated - Look for the unnatural symmetry and artificial details.', explanationImage: null },
+    { src: '/images/post_ai/ai_03.png', isReal: false, feedback: 'AI generated - Check the unrealistic facial features and artificial patterns.', explanationImage: null },
+    { src: '/images/post_ai/ai_04.png', isReal: false, feedback: 'AI generated - Notice the artificial proportions and unnatural textures.', explanationImage: null },
+    { src: '/images/post_ai/ai_05.png', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth elements and artificial blending.', explanationImage: null },
+    { src: '/images/post_ai/ai_06.png', isReal: false, feedback: 'AI generated - Check the unrealistic patterns and artificial details.', explanationImage: null },
+    { src: '/images/post_ai/ai_07.png', isReal: false, feedback: 'AI generated - Notice the artificial textures and color inconsistencies.', explanationImage: null },
+    { src: '/images/post_ai/ai_08.png', isReal: false, feedback: 'AI generated - Look for the unnaturally uniform features and artificial smoothness.', explanationImage: null },
+    { src: '/images/post_ai/ai_09.png', isReal: false, feedback: 'AI generated - Check the unrealistic proportions and artificial patterns.', explanationImage: null },
+    { src: '/images/post_ai/ai_10.png', isReal: false, feedback: 'AI generated - Notice the artificial details and unnatural blending.', explanationImage: null }
+];
+
 // Fisher–Yates 随机打乱
 function shuffle(arr) {
     const a = arr.slice();
@@ -149,8 +176,8 @@ function shuffle(arr) {
     return a;
 }
 
-// 新增：Post-test 完成提示组件
-const PostTestCompletion = ({ total, accuracy, onViewResults }) => {
+// Post-test 完成提示组件
+const PostTestCompletion = ({ total, accuracy }) => {
     const [showResults, setShowResults] = useState(false);
     
     if (showResults) {
@@ -222,19 +249,26 @@ const TestComponent = ({
 
     // —— 生成题库 ——
     useEffect(() => {
-        // 真实图：全量
-        const realPool = IMAGES.filter(img => img.isReal);
-        // AI 图：若 featureFilter 存在，则只取该特征，否则全量
-        const aiPool = IMAGES.filter(
-            img => !img.isReal && (!featureFilter || img.feature === featureFilter)
-        );
+        let realPool, aiPool;
+        
+        // 如果是 post-test，使用专门的图片池
+        if (attemptType === 'post_training') {
+            realPool = POST_TEST_IMAGES.filter(img => img.isReal);
+            aiPool = POST_TEST_IMAGES.filter(img => !img.isReal);
+        } else {
+            // 其他测试使用通用图片池
+            realPool = IMAGES.filter(img => img.isReal);
+            aiPool = IMAGES.filter(
+                img => !img.isReal && (!featureFilter || img.feature === featureFilter)
+            );
+        }
 
         // 检查是否有足够的图片
         const maxPossibleQuestions = Math.min(realPool.length, aiPool.length);
         const actualQuestions = Math.min(totalQuestions, maxPossibleQuestions);
         
         if (actualQuestions < totalQuestions) {
-            console.warn(`Not enough images available. Requested: ${totalQuestions}, Available: ${actualQuestions}`);
+            console.warn(`Not enough images available for ${attemptType}. Requested: ${totalQuestions}, Available: ${actualQuestions}`);
         }
 
         // 随机打乱图片池
@@ -243,8 +277,8 @@ const TestComponent = ({
 
         const list = [];
         for (let i = 0; i < actualQuestions; i++) {
-            const realImg = shuffledReals[i];
-            const aiImg = shuffledAis[i];
+            const realImg = shuffledReals[i % shuffledReals.length];
+            const aiImg = shuffledAis[i % shuffledAis.length];
             const isLeftReal = Math.random() < 0.5;
             
             list.push({
@@ -255,7 +289,7 @@ const TestComponent = ({
         
         setQuestions(list);
         setCurrentQuestion(0);
-    }, [totalQuestions, featureFilter]);
+    }, [totalQuestions, featureFilter, attemptType]);
 
     useEffect(() => {
         if (currentQuestion === totalQuestions) {
