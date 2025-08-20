@@ -194,6 +194,33 @@ const POST_TEST_IMAGES = [
     { src: '/images/post_ai/ai_10.png', isReal: false, feedback: 'AI generated - Notice the artificial details and unnatural blending.', explanationImage: null }
 ];
 
+// Delayed test 专用图片池
+const DELAYED_TEST_IMAGES = [
+    // Delayed test 真实图片
+    { src: '/images/delay/delay_01.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_02.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_03.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_04.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_05.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_06.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_07.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_08.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_09.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    { src: '/images/delay/delay_10.png', isReal: true, feedback: 'Correct!', explanationImage: null },
+    
+    // Delayed test AI 图片
+    { src: '/images/delay_ai/ai_01.png', isReal: false, feedback: 'AI generated - Notice the artificial features and unrealistic proportions.', explanationImage: null },
+    { src: '/images/delay_ai/ai_02.png', isReal: false, feedback: 'AI generated - Look for the unnatural symmetry and artificial details.', explanationImage: null },
+    { src: '/images/delay_ai/ai_03.png', isReal: false, feedback: 'AI generated - Check the unrealistic facial features and artificial patterns.', explanationImage: null },
+    { src: '/images/delay_ai/ai_04.png', isReal: false, feedback: 'AI generated - Notice the artificial proportions and unnatural textures.', explanationImage: null },
+    { src: '/images/delay_ai/ai_05.png', isReal: false, feedback: 'AI generated - Look for the unnaturally smooth elements and artificial blending.', explanationImage: null },
+    { src: '/images/delay_ai/ai_06.png', isReal: false, feedback: 'AI generated - Check the unrealistic patterns and artificial details.', explanationImage: null },
+    { src: '/images/delay_ai/ai_07.png', isReal: false, feedback: 'AI generated - Notice the artificial textures and color inconsistencies.', explanationImage: null },
+    { src: '/images/delay_ai/ai_08.png', isReal: false, feedback: 'AI generated - Look for the unnaturally uniform features and artificial smoothness.', explanationImage: null },
+    { src: '/images/delay_ai/ai_09.png', isReal: false, feedback: 'AI generated - Check the unrealistic proportions and artificial patterns.', explanationImage: null },
+    { src: '/images/delay_ai/ai_10.png', isReal: false, feedback: 'AI generated - Notice the artificial details and unnatural blending.', explanationImage: null }
+];
+
 // Fisher–Yates 随机打乱
 function shuffle(arr) {
     const a = arr.slice();
@@ -281,8 +308,12 @@ const TestComponent = ({
             // Post-test 使用专门的图片池
             realPool = POST_TEST_IMAGES.filter(img => img.isReal);
             aiPool = POST_TEST_IMAGES.filter(img => !img.isReal);
+        } else if (attemptType === 'delayed_test') {
+            // Delayed test 使用专门的图片池
+            realPool = DELAYED_TEST_IMAGES.filter(img => img.isReal);
+            aiPool = DELAYED_TEST_IMAGES.filter(img => !img.isReal);
         } else {
-            // 其他测试（training, delayed_test, feature training）使用通用图片池
+            // 其他测试（training, feature training）使用通用图片池
             realPool = IMAGES.filter(img => img.isReal);
             aiPool = IMAGES.filter(
                 img => !img.isReal && (!featureFilter || img.feature === featureFilter)
